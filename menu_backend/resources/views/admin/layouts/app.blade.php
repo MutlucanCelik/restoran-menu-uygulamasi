@@ -21,6 +21,23 @@
         $admin_name = $setting->user->name;
     @endphp
     <link rel="shortcut icon" href="{{asset($logo)}}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function () {
+                    $('.loaderFullScreen').addClass('loader-active');
+                },
+                complete: function () {
+                    $('.loaderFullScreen').removeClass('loader-active');
+                }
+            });
+        });
+    </script>
     @yield('css')
 </head>
 <body>
@@ -74,7 +91,7 @@
                 </a>
                 <div class="collapse" id="ui-basic" style="">
                     <ul class="nav flex-column sub-menu">
-                        @foreach(\App\Models\Category::all() as $category)
+                        @foreach(\App\Models\Category::orderBy('created_at', 'desc')->get() as $category)
                             <li class="nav-item"> <a class="nav-link" href="{{route('foods',['id' => $category->id])}}">{{ucfirst($category->name)}}</a></li>
                         @endforeach
                     </ul>
@@ -105,7 +122,7 @@
                 </a>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="{{route('login_page')}}">
+                <a class="nav-link" href="{{route('logout')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-logout"></i>
               </span>
@@ -181,7 +198,7 @@
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="{{route('login_page')}}" class="dropdown-item preview-item">
+                            <a href="{{route('logout')}}" class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-dark rounded-circle">
                                         <i class="mdi mdi-logout text-danger"></i>
@@ -222,17 +239,12 @@
 <script src="{{asset('assets/js/todolist.js')}}"></script>
 
 <script src="{{asset('assets/js/dashboard.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
 
-
-    var btns = document.querySelectorAll(".btn-modal");
-
-
-    var spans = document.querySelectorAll(".modal-close");
+    let modal = document.getElementById("myModal");
+    let btns = document.querySelectorAll(".btn-modal");
+    let spans = document.querySelectorAll(".modal-close");
 
     btns.forEach(btn => {
         btn.onclick = function(e) {
@@ -245,7 +257,6 @@
 
     spans.forEach(span => {
         span.onclick = function(e) {
-            console.log(e.target)
             e.target.closest('.modal').style.display = "none";
         }
     })

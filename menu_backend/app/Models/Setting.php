@@ -14,7 +14,7 @@ class Setting extends Model
     protected $primaryKey = null;
     public $incrementing = false;
 
-    protected $fillable = ['*'];
+    protected $guarded = [];
 
     public function user(){
         return $this->belongsTo(User::class);

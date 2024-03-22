@@ -30,6 +30,48 @@ class MealController extends Controller
     }
 
     public function changeStatus(Request $request){
-        dd($request->id);
+        $food = Meal::where('id',$request->id)->first();
+        $food->status = !$food->status ;
+        $food->save();
+        return redirect()->back();
     }
+    public function edit(Request $request){
+        $meal = Meal::with(['getCountry'])->where('id',$request->id)->first();
+        return response()->json($meal);
+    }
+    public function update(Request $request){
+        $meal = Meal::where('id',$request->id)->first();
+        $meal->name = $request->name;
+        $meal->country_id = $request->country_id;
+        $meal->description = $request->description;
+        $meal->price = $request->price;
+        $meal->status = isset($request->staus) ? 0 : 1;
+
+        if($request->hasFile('image')){
+            $imgFile = $request->file('image');
+            $originalName = $imgFile->getClientOriginalName();
+            $originalExtension = $imgFile->getClientOriginalExtension();
+            $explodeName = explode('.',$originalName)[0];
+            $fileName = Str::slug($explodeName) . '.' . $originalExtension;
+            $publicPath = 'storage/meals/';
+            $meal['image'] = $publicPath . $fileName;
+            $imgFile->storeAs('public/meals',$fileName);
+        }
+        $meal->save();
+
+        return redirect()->back();
+    }
+
+    public function detail(Request $request){
+        $meal = Meal::with(['getCountry','getCategory'])->where('id',$request->id)->first();
+
+        return response()->json($meal);
+    }
+
+    public function delete(Request $request){
+        $meal = Meal::where('id',$request->id)->first();
+        $meal->delete();
+        return redirect()->back();
+    }
+
 }

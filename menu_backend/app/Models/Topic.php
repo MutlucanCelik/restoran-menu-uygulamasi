@@ -10,5 +10,5 @@ class Topic extends Model
     use HasFactory;
 
     protected $table = 'topics';
-    protected $fillable = ['*'];
+    protected $guarded = [];
 }

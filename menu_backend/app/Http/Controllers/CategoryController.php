@@ -18,5 +18,32 @@ class CategoryController extends Controller
         return view('admin.pages.foods',compact('category','countries','meals'));
     }
 
+    public function store(Request $request){
+        $imgFile = $request->file('image');
+        $originalName = $imgFile->getClientOriginalName();
+        $originalExtension = $imgFile->getClientOriginalExtension();
+        $explodeName = explode('.',$originalName)[0];
+
+        $fileName = Str::slug($explodeName) . '.' . $originalExtension;
+
+        $publicPath = 'storage/categories/';
+
+        $data = $request->except('_token');
+        $data['image'] = $publicPath . $fileName;
+
+
+        Category::create($data);
+        $imgFile->storeAs('public/categories',$fileName);
+        return redirect()->back();
+
+    }
+
+    public function delete(Request $request){
+        $category = Category::where('id',$request->category_id);
+        $category->delete();
+
+        return redirect()->back();
+    }
+
 
 }

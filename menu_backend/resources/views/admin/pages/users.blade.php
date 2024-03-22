@@ -15,6 +15,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Kullanıcılar</h4>
+                            <form id="form_change_status" action="{{route(('user_change_status'))}}" method="POST">
+                                @csrf
+                                <input type="text" id="id" name="id" class="d-none">
+                            </form>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -39,7 +43,7 @@
                                                 <span class="pl-2">{{$user->name}}</span>
                                             </td>
                                             <td> {{$user->email}} </td>
-                                            <td><a class="btn btn-outline-{{$user->status ? 'success' : 'danger'}} btn-fw mr-1">{{$user->status ? 'Aktif' : 'Pasif'}}</a></td>
+                                            <td><a data-id="{{$user->id}}" class="btn-status btn btn-outline-{{$user->status ? 'success' : 'danger'}} btn-fw mr-1">{{$user->status ? 'Aktif' : 'Pasif'}}</a></td>
                                             <td> {{count($user->reservations)}} </td>
                                             <td>
                                                 <a class="btn btn-outline-primary btn-fw mr-1">Detay</a>
@@ -59,4 +63,15 @@
 @endsection
 
 @section('js')
+    <script>
+        const form = $('#form_change_status');
+
+        $('.btn-status').click(function (){
+            const userId = $(this).data('id');
+            form.find('#id').val(userId);
+            form.submit();
+
+        })
+
+    </script>
 @endsection

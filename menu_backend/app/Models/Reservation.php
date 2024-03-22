@@ -11,7 +11,7 @@ class Reservation extends Model
 
     protected $table = 'reservation';
 
-    protected $fillable = ['*'];
+    protected $guarded = [];
 
     public function user()
     {

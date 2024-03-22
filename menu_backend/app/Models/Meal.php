@@ -16,4 +16,8 @@ class Meal extends Model
     public function getCountry(){
         return $this->belongsTo(Country::class,'country_id');
     }
+
+    public function getCategory(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
 }

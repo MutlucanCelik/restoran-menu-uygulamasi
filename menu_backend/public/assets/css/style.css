@@ -21125,6 +21125,9 @@ div.tagsinput {
       margin-left: 0;
       width: 100%; } }
 
+.swal2-icon{
+    margin-bottom: 0 !important;
+}
 .content-wrapper {
   background: #000000;
   padding: 1.875rem 1.75rem;

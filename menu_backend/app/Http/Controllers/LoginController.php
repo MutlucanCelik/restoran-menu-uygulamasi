@@ -14,10 +14,15 @@ class LoginController extends Controller
         $userName = $request->user_name;
         $password = $request->password;
 
-        if($userName == 'admin' && Auth::attempt(['user_name'=> 'admin','password' => $password])){
+        if($userName == 'admin' && Auth::attempt(['user_name'=> $userName,'password' => $password])){
             return redirect()->route('index');
         }else{
             return redirect()->route('login_page')->withErrors(['message' => 'Bilgilerinizi kontrol edin']);
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login_page');
     }
 }

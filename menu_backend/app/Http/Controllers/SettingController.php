@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -10,8 +11,9 @@ class SettingController extends Controller
 {
     public function show(){
         $setting = Setting::with('user')->first();
+        $categories = Category::orderBy('created_at','desc')->get();
 
-        return view('admin.pages.settings',compact('setting'));
+        return view('admin.pages.settings',compact('setting','categories'));
     }
 
     public function store(Request $request){
@@ -42,4 +44,5 @@ class SettingController extends Controller
         return redirect()->back();
 
     }
+
 }

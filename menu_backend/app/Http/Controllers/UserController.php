@@ -13,4 +13,12 @@ class UserController extends Controller
 
         return view('admin.pages.users',compact('users'));
     }
+
+    public function changeStatus(Request $request){
+        $user = User::where('id',$request->id)->first();
+        $user->status = !$user->status;
+        $user->save();
+
+        return redirect()->back();
+    }
 }

@@ -17,7 +17,7 @@
             <h1 class="opacity">Giriş</h1>
             <form action="{{route('login')}}" method="POST">
                 @csrf
-                <input type="text" id="user_name" placeholder="Email" name="user_name" />
+                <input type="text" id="user_name" placeholder="Kullanıcı adı" name="user_name" />
                 <input type="password" id="passowrd" name="password" placeholder="Şifre" />
                 <button type="submit" class="opacity">Giriş</button>
                 @if($errors->any())
