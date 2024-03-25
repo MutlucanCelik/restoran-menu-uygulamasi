@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('reservation', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('meal_id');
+            $table->unsignedBigInteger('reservation_status_id')->default(1);
+            $table->tinyInteger('pay_status')->default(0); //default olarak hesap ödenmedi
+            $table->integer('amount')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
-            $table->foreign('meal_id')->on('meals')->references('id')->onDelete('cascade');
+            $table->foreign('reservation_status_id')->on('reservation_status')->references('id')->onDelete('cascade');
         });
     }
 

@@ -21213,4 +21213,28 @@ input,select,textarea{
     cursor: pointer;
 }
 
+.alert{
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.page-item.active{
+    backgorund-color:#333;
+}
+.page-item.active span{
+    color:#fff !important;
+    background-color:#333 !important;
+
+}
+.page-link{
+    color:#fff !important;
+    border-color:#6C7292 !important;
+}
+.page-item:not(.active) .page-link:hover{
+    background-color: #6C7292 !important;
+}
+.page-item.disabled .page-link{
+    background-color: #000 !important;
+}
 /*# sourceMappingURL=maps/style.css.map */

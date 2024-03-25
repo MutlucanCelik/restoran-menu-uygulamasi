@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\local;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Models\Setting;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -14,7 +12,7 @@ class LoginController extends Controller
         $userName = $request->user_name;
         $password = $request->password;
 
-        if($userName == 'admin' && Auth::attempt(['user_name'=> $userName,'password' => $password])){
+        if(Auth::attempt(['user_name'=> $userName,'password' => $password])){
             return redirect()->route('index');
         }else{
             return redirect()->route('login_page')->withErrors(['message' => 'Bilgilerinizi kontrol edin']);

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('category_id');
             $table->string('name')->unique();
             $table->string('image');
@@ -22,7 +21,6 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
-            $table->foreign('country_id')->on('countries')->references('id')->onDelete('cascade');
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('cascade');
 
         });

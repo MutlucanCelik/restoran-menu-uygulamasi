@@ -5,8 +5,18 @@
 @endsection
 
 @php
-    $messageCount = \App\Models\Message::count();
-    $reservationCount = \App\Models\Reservation::count();
+    $messageCount = \App\Models\Message::with('user')
+    ->whereHas('user',function ($query){
+        $query->where('user_name','!=','admin');
+    })
+    ->where('read_at',0)
+    ->count();
+
+    $pendingReservationsCount = \App\Models\Reservation::whereHas('reservationStatus', function($query) {
+        $query->where('status', 'pending');
+    })->count();
+
+    $totalReservationCount = \App\Models\Reservation::count();
     $userCount = \App\Models\User::whereNot('id',1)->count()
 @endphp
 
@@ -52,7 +62,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">{{$reservationCount ?? 0}}</h3>
+                                        <h3 class="mb-0">{{$pendingReservationsCount ?? 0}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -61,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="text-muted font-weight-normal">Rezarvasyon sayısı</h6>
+                            <h6 class="text-muted font-weight-normal">İşlem yapılmamış <br> rezarvasyon sayısı</h6>
                         </div>
                     </a>
                 </div>
@@ -106,7 +116,7 @@
                                     <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                                 </div>
                                 <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                                    <h6 class="font-weight-bold mb-0">44</h6>
+                                    <h6 class="font-weight-bold mb-0">{{$totalReservationCount ?? 0}}</h6>
                                 </div>
                             </div>
                         </div>

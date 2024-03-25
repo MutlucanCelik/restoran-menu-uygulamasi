@@ -17,7 +17,9 @@ class CountryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->country()
+            'name' => fake()->country(),
+            'image' => fake()->image('public/storage/countries', 640, 480, null, false),
+
         ];
     }
 }

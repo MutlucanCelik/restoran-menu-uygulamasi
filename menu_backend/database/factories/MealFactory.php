@@ -17,7 +17,6 @@ class MealFactory extends Factory
     public function definition(): array
     {
         return [
-            'country_id' => random_int(1,10),
             'category_id' => random_int(1,10),
             'name' => fake()->name,
             'image' => fake()->image('public/storage/meals', 640, 480, null, false),

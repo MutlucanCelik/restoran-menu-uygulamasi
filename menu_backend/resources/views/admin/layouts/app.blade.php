@@ -19,6 +19,9 @@
         $logo = $setting->image;
         $companyName = $setting->company_name;
         $admin_name = $setting->user->name;
+        $pendingReservationsCount = \App\Models\Reservation::whereHas('reservationStatus', function($query) {
+            $query->where('status', 'pending');
+        })->count();
     @endphp
     <link rel="shortcut icon" href="{{asset($logo)}}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -139,12 +142,14 @@
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-                @php($notReadMessageCount = \App\Models\Message::where('read_at',0)->count())
+                @php($notReadMessageCount = \App\Models\Message::where('read_at',0)->whereHas('user', function($query) {
+            $query->where('user_name', '!=', 'admin');
+        })->count())
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle mx-0" id="notificationDropdown" href="#" data-toggle="dropdown">
                             <i class="mdi mdi-bell"></i>
-                            @if($notReadMessageCount > 0)
+                            @if($notReadMessageCount +$pendingReservationsCount > 0)
                                 <span class="count bg-danger"></span>
                             @endif
                         </a>
@@ -162,18 +167,35 @@
                                     <p class="text-muted ellipsis mb-0"> 2 </p>
                                 </div>
                             </a>--}}
-                            <div class="dropdown-divider"></div>
-                            <a href="{{route('messages')}}" class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-email text-secondary"></i>
+                            @if($notReadMessageCount)
+                                <div class="dropdown-divider"></div>
+                                <a href="{{route('messages')}}" class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-email text-secondary"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject mb-1">Okunmamış mesajınız var</p>
-                                    <p class="text-muted ellipsis mb-0"> {{ $notReadMessageCount }} </p>
-                                </div>
-                            </a>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Okunmamış mesaj var</p>
+                                        <p class="text-muted ellipsis mb-0"> {{ $notReadMessageCount }} </p>
+                                    </div>
+                                </a>
+                            @endif
+                            @if($pendingReservationsCount)
+                                <div class="dropdown-divider"></div>
+                                <a href="{{route('reservations')}}" class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-account-check"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1" style="line-height: 1.2rem">İşlem yapılmamış<br> rezervasyon var</p>
+                                        <p class="text-muted ellipsis mb-0"> {{ $pendingReservationsCount }} </p>
+                                    </div>
+                                </a>
+                            @endif
+
 
                         </div>
                     </li>
@@ -242,7 +264,6 @@
 
 <script>
 
-    let modal = document.getElementById("myModal");
     let btns = document.querySelectorAll(".btn-modal");
     let spans = document.querySelectorAll(".modal-close");
 
@@ -262,6 +283,7 @@
     })
 
     window.onclick = function(event) {
+        const modal = event.target.closest('#myModal')
         if (event.target == modal) {
             modal.style.display = "none";
         }

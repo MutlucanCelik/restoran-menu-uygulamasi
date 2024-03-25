@@ -19,15 +19,17 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            RoleSeeder::class,
             UserSeeder::class,
-            CountrySeeder::class,
             CategorySeeder::class,
             MealSeeder::class,
+            ReservationStatusSeeder::class,
             ReservationSeeder::class,
             FavoriteSeeder::class,
             TopicSeeder::class,
             MessageSeeder::class,
             SettingSeeder::class
+
 
         ]);
     }

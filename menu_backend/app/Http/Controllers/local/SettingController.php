@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\local;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SettingRequest;
 use App\Models\Category;
 use App\Models\Setting;
-use Illuminate\Http\Request;
+use App\Models\Topic;
 use Illuminate\Support\Str;
 
 class SettingController extends Controller
@@ -12,16 +14,17 @@ class SettingController extends Controller
     public function show(){
         $setting = Setting::with('user')->first();
         $categories = Category::orderBy('created_at','desc')->get();
-
-        return view('admin.pages.settings',compact('setting','categories'));
+        $topics = Topic::orderBy('created_at','desc')->get();
+        return view('admin.pages.settings',compact('setting','categories','topics'));
     }
 
-    public function store(Request $request){
+    public function update(SettingRequest $request){
         $setting = Setting::with('user')->first();
         $data = $request->except('_token');
         $setting->company_name = $data['company_name'];
         $setting->user->name = $data['name'];
         $setting->user->email = $data['email'];
+        $setting->capacity = $data['capacity'];
         $setting->info = $data['info'];
 
 
@@ -41,8 +44,6 @@ class SettingController extends Controller
         $setting->save();
 
 
-        return redirect()->back();
-
+        return redirect()->back()->with('message', 'Ayarlar başarıyla güncellendi.');
     }
-
 }

@@ -2,18 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CountrySeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Country::factory(10)->create();
-
+        Role::create([
+            'name' =>'admin'
+        ]);
+        Role::create([
+            'name' =>'user'
+        ]);
     }
 }

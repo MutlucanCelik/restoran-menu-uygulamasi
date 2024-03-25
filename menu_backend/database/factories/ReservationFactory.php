@@ -17,8 +17,8 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'meal_id' => 1,
-            'user_id' => random_int(1,10)
+            'user_id' => random_int(1,10),
+            'pay_status' => 0,
         ];
     }
 }

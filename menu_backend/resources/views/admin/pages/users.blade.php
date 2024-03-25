@@ -20,7 +20,7 @@
                                 <input type="text" id="id" name="id" class="d-none">
                             </form>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table mb-4">
                                     <thead>
                                     <tr>
                                         <th>
@@ -36,23 +36,38 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $key => $user)
+                                    @foreach($users as  $user)
                                         <tr>
-                                            <td>{{$key + 1}}</td>
+                                            <td>{{$loop->index + $users->firstItem()}}</td>
                                             <td>
                                                 <span class="pl-2">{{$user->name}}</span>
                                             </td>
                                             <td> {{$user->email}} </td>
-                                            <td><a data-id="{{$user->id}}" class="btn-status btn btn-outline-{{$user->status ? 'success' : 'danger'}} btn-fw mr-1">{{$user->status ? 'Aktif' : 'Pasif'}}</a></td>
+                                            <td><a data-user_name="{{$user->name}}" data-id="{{$user->id}}" class="btn-status btn btn-outline-{{$user->status ? 'success' : 'danger'}} btn-fw mr-1">{{$user->status ? 'Aktif' : 'Pasif'}}</a></td>
                                             <td> {{count($user->reservations)}} </td>
                                             <td>
-                                                <a class="btn btn-outline-primary btn-fw mr-1">Detay</a>
+                                                <a data-id="{{$user->id}}" id="detail" class="btn btn-outline-primary btn-fw mr-1 btn-detail btn-modal">Detay</a>
                                             </td>
                                         </tr>
                                     @endforeach
 
                                     </tbody>
                                 </table>
+                                {{$users->links()}}
+                                <div data-id="detail" id="myModal" class="modal">
+
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <h4 id="detail_head" class="mb-4 text-white d-inline-block"></h4>
+                                            <span class="modal-close">&times;</span>
+                                        </div>
+                                        <div id="detail_container">
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,5 +88,52 @@
 
         })
 
+        $('.btn-detail').click(function (){
+            const userId = $(this).data('id');
+            console.log(userId)
+            $.ajax({
+                type: 'get',
+                url: '{!! route('user_detail') !!}',
+                data: {
+                    id: userId
+                },
+                dataType: "json",
+                success: function (user) {
+                    $('#detail_head').html(user.name + ' Detay')
+
+                    $('#detail_container').html(`
+                                <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 180px'>Ad Soyad :</span>  <span >${user.name}</span>  </div>
+                                <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 180px'>Kullanıcı adı :</span>  <span >${user.user_name}</span>  </div>
+                                <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 180px'>Email :</span>  <span >${user.email}</span>  </div>
+                                <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 180px'>Durum :</span>  <span >${user.status ? 'Aktif' : 'Pasif'}</span>  </div>
+                                <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 180px'>Rezervasyon sayısı :</span>  <span >${user.reservations.length || 0}</span>  </div>
+                            `)
+                },
+                error: function (data) {
+                    Swal.fire({
+                        icon: "error",
+                        title: 'Hata',
+                        html: "<div id=\"validation-errors\"></div>",
+                        showConfirmButton: true,
+                        confirmButtonText: "Tamam"
+                    });
+                    $.each(data.responseJSON.errors, function (key, value) {
+                        $('#validation-errors').append('<div class="alert alert-danger">' + value + '</div>');
+                    });
+                }
+            });
+
+        })
+
+    </script>
+    <script>
+        @if(session('message'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı!',
+                html: '{!! session('message') !!}',
+                confirmButtonText: 'Tamam'
+            });
+        @endif
     </script>
 @endsection

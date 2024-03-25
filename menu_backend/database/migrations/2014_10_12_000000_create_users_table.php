@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('role_id')->default(2);
             $table->string('name');
             $table->string('user_name');
             $table->string('email')->unique();
@@ -21,6 +22,8 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('role_id')->on('roles')->references('id')->onDelete('cascade');
         });
     }
 

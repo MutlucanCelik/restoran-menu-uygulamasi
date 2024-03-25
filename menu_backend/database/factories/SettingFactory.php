@@ -20,6 +20,7 @@ class SettingFactory extends Factory
             'user_id' => 1,
             'company_name' => fake()->firstName,
             'info' => fake()->paragraph,
+            'capacity' => 40,
             'image' => fake()->image('public/storage/settings', 640, 480, null, false),
 
         ];
