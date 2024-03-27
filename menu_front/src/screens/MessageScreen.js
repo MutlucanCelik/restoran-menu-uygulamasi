@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../api/api';
@@ -79,12 +79,9 @@ const MessageScreen = () => {
           value={message}
         />
       </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Gönder"
-          onPress={sendMessage}
-        />
-      </View>
+      <TouchableOpacity style={styles.button} onPress={sendMessage}>
+        <Text style={styles.buttonText}>Gönder</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -128,9 +125,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  buttonContainer: {
-    width: '100%',
+  button:{
+    backgroundColor:'#017BFE',
+    width:'100%',
+    padding:8,
+    textAlign:'center',
+    borderRadius:7
   },
+  buttonText:{
+    textAlign:'center',
+    color:'#fff'
+  }
+  
 });
 
 export default MessageScreen;

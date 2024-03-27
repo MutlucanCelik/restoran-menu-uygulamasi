@@ -19,7 +19,7 @@ export default function MealsScreen({navigation,route}) {
       const fetchMeals = async () => {
         try {
           const fetchedMeals = await getMeals(categoryId);
-          setMeals(fetchedMeals);
+          setMeals(fetchedMeals.filter(i => i.status));
           setLoading(false);
         } catch (error) {
           console.error('Yemekler çekerken bir hata oluştu:', error);
@@ -37,7 +37,7 @@ export default function MealsScreen({navigation,route}) {
           mealName: meal.item.name
         })
       }
-      return <MealGrid item={meal.item} pressMeal={pressHandler}/>
+      return meal.item.status ? <MealGrid item={meal.item} pressMeal={pressHandler}/> : null
     }
   
     if (loading) {

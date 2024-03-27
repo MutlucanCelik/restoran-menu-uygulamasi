@@ -52,7 +52,7 @@ const ReservationForm = () => {
 
   return (
     <View style={styles.container}>
-        <View style={{flexDirection:'row',alignItems:'center',borderWidth:1,borderColor:'#ddd'}}>
+        <View style={{flexDirection:'row',alignItems:'center',borderWidth:1,borderColor:'gray',borderRadius:7}}>
            
             <Text style={styles.selectedDateTimeText} placeholder='Tarih'>
             { selectedDateTime ? selectedDateTime.toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' }) : null}
@@ -103,11 +103,10 @@ const styles = StyleSheet.create({
     flex:1,
     fontSize: 18,
     fontWeight: 'bold',
-    padding:5
+    padding:5,
   },
   button:{
-    
-    backgroundColor:'blue',
+    backgroundColor:'#017BFE',
     width:'100%',
     padding:10,
     textAlign:'center',
