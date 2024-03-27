@@ -39,13 +39,6 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail3">Rezervasyon kapasitesi</label>
-                                    <input type="text" class="form-control" value="{{$setting->capacity ?? ''}}"  id="capacity" name="capacity">
-                                    @if($errors->has('capacity'))
-                                        <div class="alert alert-danger">{{$errors->first('capacity')}}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group">
                                     <label for="image">Logo</label>
                                     <div class="input-group col-xs-12">
                                         <input type="file" class="form-control" name="image"  id="image" accept="image/png, image/jpeg, image/jpg">

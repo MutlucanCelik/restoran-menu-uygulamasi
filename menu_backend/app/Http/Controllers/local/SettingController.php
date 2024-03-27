@@ -24,7 +24,6 @@ class SettingController extends Controller
         $setting->company_name = $data['company_name'];
         $setting->user->name = $data['name'];
         $setting->user->email = $data['email'];
-        $setting->capacity = $data['capacity'];
         $setting->info = $data['info'];
 
 

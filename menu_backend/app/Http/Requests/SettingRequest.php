@@ -25,7 +25,6 @@ class SettingRequest extends FormRequest
             'name' => 'required|min:3',
             'company_name' => 'required|min:4',
             'email' => 'required|email',
-            'capacity' => 'required|integer',
             'image' => 'mimes:jpg,jpeg,png|max:2048',
             'info' => 'required'
         ];
@@ -42,8 +41,6 @@ class SettingRequest extends FormRequest
             'image.size' => 'En fazla 2MB boyutunda resim yükleyebilirsiniz',
             'email.required' => 'Bu alan zorunludur',
             'email.email' => 'Email türünde girişler yapın',
-            'capacity.required' => 'Bu alan zorunludur',
-            'capacity.integer' => 'Sayı değerleri giriniz',
             'info.required' => 'Bu alan zorunludur',
         ];
     }

@@ -9,8 +9,13 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     public function getCompanyInfo(){
-        $companyInfo = Setting::first(['company_name','info','capacity','image']);
+        $companyInfo = Setting::first(['company_name','info','image']);
 
         return response()->json($companyInfo);
+    }
+    public function getCompanyImage(){
+        $companyImage = Setting::first(['image']);
+
+        return response()->json($companyImage);
     }
 }

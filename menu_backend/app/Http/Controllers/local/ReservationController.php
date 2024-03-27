@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class ReservationController extends Controller
 {
     public function show(){
-        $reservations = Reservation::with(['user','reservationStatus'])->paginate(5);
+        $reservations = Reservation::with(['user','reservationStatus'])
+            ->orderBy('created_at','DESC')
+            ->paginate(5);
 
         return view('admin.pages.reservation',compact('reservations'));
     }

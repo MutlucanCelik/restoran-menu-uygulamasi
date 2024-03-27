@@ -43,7 +43,7 @@
                                             <td>{{ $reservation->user->email}} </td>
                                             <td> {{$reservation->created_at}} </td>
                                             <td class="d-flex gap-2">
-                                                <a data-id="{{$reservation->id}}" id="detail" class="btn btn-outline-primary btn-fw mr-1 btn-detail btn-modal {{($reservation->reservationStatus->status != 'pending') ? '' : 'd-none'}}">Detay</a>
+                                                <a data-id="{{$reservation->id}}" id="detail" class="btn btn-outline-primary btn-fw mr-1 btn-detail btn-modal">Detay</a>
                                                <div class="mr-1 {{($reservation->reservationStatus->status != 'pending') ? 'd-none' : ''}}">
                                                    <a data-action="reservation_approval" data-id="{{$reservation->id}}" class="btn btn-outline-success btn-fw btn-get-id mr-1">Onay</a>
                                                    <a data-action="reservation_cancel" data-id="{{$reservation->id}}" class="btn btn-outline-danger btn-get-id btn-fw">İptal</a>
@@ -122,7 +122,11 @@
                         <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Kullanıcı adı :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${reservation.user.user_name}</span>  </div>
                         <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Ad Soyad :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${reservation.user.name}</span>  </div>
                         <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Email :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${reservation.user.email}</span>  </div>
-                        <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Onay durumu :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${((reservation.reservation_status.status == 'approval') && 'Onaylandı') || ((reservation.reservation_status.status == 'cancel') && 'İptal edildi')}</span>  </div>
+                        <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Tarih :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${reservation.date}</span>  </div>
+                        <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Kişi sayısı :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${reservation.number_of_people}</span>  </div>
+                        ${(reservation.reservation_status.status != 'pending') ? `
+                             <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Onay durumu :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>${((reservation.reservation_status.status == 'approval') && 'Onaylandı') || ((reservation.reservation_status.status == 'cancel') && 'İptal edildi')}</span>  </div>
+                        ` : ''}
                         ${(reservation.reservation_status.status == 'approval') && reservation.pay_status ? `
                             <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 23%'>Hesap :</span>  <span  style='flex:1;text-wrap: wrap;word-break: break-word'>₺ ${reservation.amount}</span>  </div>
                         ` : ''}

@@ -18,6 +18,8 @@ class ReservationFactory extends Factory
     {
         return [
             'user_id' => random_int(1,10),
+            'date' => '12.13.2024 15:40',
+            'number_of_people' => '12',
             'pay_status' => 0,
         ];
     }

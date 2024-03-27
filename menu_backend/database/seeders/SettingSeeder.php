@@ -13,6 +13,11 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        Setting::factory(1)->create();
+        Setting::create([
+            'user_id' => 1,
+            'company_name' => '',
+            'info' => '',
+            'image'=>''
+        ]);
     }
 }

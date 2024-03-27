@@ -29,6 +29,7 @@ class CategoryController extends Controller
             $imgFile->storeAs('public/categories',$fileName);
         }
 
+
         Category::create($data);
         return redirect()->back()->with('message', '<div><span class="fw-semibold text-danger">' . $request->category_name . '</span> kategorisi başarıyla eklendi</div>');
 

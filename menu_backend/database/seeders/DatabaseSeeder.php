@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            CategorySeeder::class,
-            MealSeeder::class,
+            //CategorySeeder::class,
+            //MealSeeder::class,
             ReservationStatusSeeder::class,
-            ReservationSeeder::class,
-            FavoriteSeeder::class,
-            TopicSeeder::class,
-            MessageSeeder::class,
+            //ReservationSeeder::class,
+            //FavoriteSeeder::class,
+            //TopicSeeder::class,
+            //MessageSeeder::class,
             SettingSeeder::class
 
 

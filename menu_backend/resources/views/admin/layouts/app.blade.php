@@ -4,6 +4,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendors/css/vendor.bundle.base.css')}}">
@@ -16,9 +17,9 @@
 
     @php
         $setting = App\Models\Setting::with('user')->first();
-        $logo = $setting->image;
-        $companyName = $setting->company_name;
-        $admin_name = $setting->user->name;
+        $logo = $setting->image ?? '';
+        $companyName = $setting->company_name ?? '';
+        $admin_name = $setting->user->name ?? '';
         $pendingReservationsCount = \App\Models\Reservation::whereHas('reservationStatus', function($query) {
             $query->where('status', 'pending');
         })->count();

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('reservation_status_id')->default(1);
+            $table->string('date');
+            $table->string('number_of_people');
             $table->tinyInteger('pay_status')->default(0); //default olarak hesap ödenmedi
             $table->integer('amount')->default(0);
             $table->timestamps();

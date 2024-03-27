@@ -15,7 +15,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('company_name');
             $table->text('info');
-            $table->integer('capacity');
             $table->string('image')->nullable();
             $table->timestamps();
 

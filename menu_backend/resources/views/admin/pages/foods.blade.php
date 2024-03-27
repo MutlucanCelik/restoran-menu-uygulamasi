@@ -209,7 +209,6 @@
                         $('#detail_head').html(meal.name + ' Detay')
 
                         $('#detail_container').html(`
-                            <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 18%'>Ülke :</span>  <span style="word-wrap: break-word;flex: 1;text-wrap: wrap;">${meal.get_country.name}</span>  </div>
                             <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 18%'>Kategori :</span>  <span style="word-wrap: break-word;flex: 1;text-wrap: wrap;">${meal.get_category.name}</span>  </div>
                             <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 18%'>Adı :</span>  <span style="word-wrap: break-word;flex: 1;text-wrap: wrap;">${meal.name}</span>  </div>
                             <div class="mb-4 d-flex"><span class="font-weight-bold text-white" style='width: 18%'>Fiyat :</span>  <span style="word-wrap: break-word;flex: 1;text-wrap: wrap;">₺ ${meal.price}</span>  </div>

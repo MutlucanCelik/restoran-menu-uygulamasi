@@ -17,13 +17,12 @@ class UserSeeder extends Seeder
             'role_id' => 1,
             'name' => 'Mutlucan',
             'user_name' =>'admin',
-            'email' => 'john@example.com',
+            'email' => 'mtlcnclk98@gmail.com',
             'password' => '$2y$12$OP5LtoO/qEhvfxrZNSW78uElAjObnmifY8FXfbl57Z0k5N2gy1VLe' ,
             'email_verified_at' => now(),
             'status' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        User::factory(9)->create();
     }
 }
