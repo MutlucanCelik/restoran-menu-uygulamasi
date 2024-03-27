@@ -23,7 +23,10 @@ export default function MealDetailScreen({route,navigation}) {
         setMeal(fetchedMeal[0]);
         setLoading(false);
       } catch (error) {
-        console.error('Yemekler çekerken bir hata oluştu:', error);
+        Alert.alert(
+          'Hata',
+          'Gıda bilgilerini getirirken hata oluştu.',
+          [{ text: 'Tamam' }])
         setLoading(false);
       }
     };

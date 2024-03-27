@@ -28,14 +28,14 @@ export default function RegisterScreen({ navigation }) {
           setPassword('');
           setLoading(false);
           if (response.data.token) {
-              Alert.alert('Başarılı', 'Başarıyla kayıt olundu.');
+              Alert.alert('Başarılı', 'Başarıyla kayıt olundu.',[{ text: 'Tamam' }]);
               navigation.navigate('Login');
           } else {
               // Hatalı giriş
-              Alert.alert('Hata', 'Kullanıcı adı veya şifre hatalı.');
+              Alert.alert('Hata', 'Kullanıcı adı veya şifre hatalı.',[{ text: 'Tamam' }]);
           }
       } catch (error) {
-          Alert.alert('Uyarı','Bir sorun oluştu');
+          Alert.alert('Uyarı','Beklenmedin bir sorun oluştu.',[{ text: 'Tamam' }]);
           setLoading(false);
 
       }

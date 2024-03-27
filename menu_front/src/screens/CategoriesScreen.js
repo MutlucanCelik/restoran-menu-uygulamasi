@@ -14,7 +14,10 @@ const CategoryScreen = ({navigation}) => {
       setCategories(fetchedCategories);
       setLoading(false);
     } catch (error) {
-      console.error('Kategorileri çekerken bir hata oluştu:', error);
+      Alert.alert(
+        'Hata',
+        'Kategoriler getirilirken bir sorun oluştu.',
+        [{ text: 'Tamam' }])
       setLoading(false);
     }
   };

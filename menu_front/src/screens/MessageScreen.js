@@ -28,25 +28,40 @@ const MessageScreen = () => {
 
   const sendMessage = async () => {
     try {
-      const response = await axios.post(`${BASE_URL}api/send-message`, {
-        user_id: user.id,
-        message: message,
-        topic_id: selectedOption
-      });
-      
-      if (response.data.message == 'success') {
-        setMessage('');
-        setSelectedOption('')
+      if(message && selectedOption){
+        const response = await axios.post(`${BASE_URL}api/send-message`, {
+          user_id: user.id,
+          message: message,
+          topic_id: selectedOption
+        });
+        
+        if (response.data.message == 'success') {
+          setMessage('');
+          setSelectedOption('')
+          Alert.alert(
+            'Başarılı',
+            'Mesajınız başarıyla gönderildi.',
+            [{ text: 'Tamam' }]
+          );      
+        } else {
+          Alert.alert(
+            'Hata',
+            'Beklenmedik bir sorun oluştu',
+            [{ text: 'Tamam' }]
+          );   
+        }
+      }else{
         Alert.alert(
-          'Başarılı',
-          'Mesajınız başarıyla gönderildi.',
-          [{ text: 'Tamam' }]
-        );      } else {
-        Alert.alert('Hata', 'Beklenmedik bir sorun oluştu');
+          'Uyarı',
+          'Tüm alanları doldurun lütfen.',
+          [{ text: 'Tamam' }])
       }
     } catch (error) {
-      console.error('Error sending message:', error);
-      Alert.alert('Error', 'An error occurred while sending the message.');
+      Alert.alert(
+        'Hata',
+        'Beklenmedik bir sorun oluştu',
+        [{ text: 'Tamam' }]
+      );  
     }
   };
 

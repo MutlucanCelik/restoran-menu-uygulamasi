@@ -39,21 +39,26 @@ export default function LoginScreen({ navigation }) {
           setPassword('');
           setLoading(false);
           if (response.data.token) {
-            
-              const userInfo ={
-                id:response.data.user.id,
-                user_name:response.data.user.user_name,
-                name:response.data.user.name,
-                email:response.data.user.email
+              if(response.data.user.role_id == 1){
+                Alert.alert('Uyarı', 'Admin yetkili buradan giriş yapamaz.',[{ text: 'Tamam' }]);
+              }else if(!response.data.user.status){
+                Alert.alert('Uyarı', 'Hesabınız yetkili tarafından pasiflenmiştir.',[{ text: 'Tamam' }]);
+              }else{
+                const userInfo ={
+                  id:response.data.user.id,
+                  user_name:response.data.user.user_name,
+                  name:response.data.user.name,
+                  email:response.data.user.email
+                }
+                updateUser(userInfo);
+                navigation.navigate('Drawer');
               }
-              updateUser(userInfo);
-              navigation.navigate('Drawer');
+              
           } else {
-              // Hatalı giriş
-              Alert.alert('Hata', 'Kullanıcı adı veya şifre hatalı.');
+              Alert.alert('Hata', 'Beklenmedik bir sorun oluştu',[{ text: 'Tamam' }]);
           }
       } catch (error) {
-          Alert.alert('Uyarı','Şifreler uyuşmuyor');
+          Alert.alert('Uyarı','Bilgileriniz uyuşmuyor',[{ text: 'Tamam' }]);
           setLoading(false);
 
       }

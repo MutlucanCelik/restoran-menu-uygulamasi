@@ -22,7 +22,10 @@ export default function MealsScreen({navigation,route}) {
           setMeals(fetchedMeals.filter(i => i.status));
           setLoading(false);
         } catch (error) {
-          console.error('Yemekler çekerken bir hata oluştu:', error);
+          Alert.alert(
+            'Hata',
+            'Gıdalar getirilirken bir hata oluştu.',
+            [{ text: 'Tamam' }])
           setLoading(false);
         }
       };

@@ -16,7 +16,7 @@ const ReservationListScreen = () => {
         const response = await axios.get(`${BASE_URL}api/reservations/${user.id}`);
         setData(response.data);
       } catch (error) {
-        console.error('GET error:', error);
+        Alert.alert('Hata', 'Veriler çekilirken bir sorun oluştu.',[{ text: 'Tamam' }]);
       }
     };
 

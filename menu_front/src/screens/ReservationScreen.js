@@ -43,10 +43,13 @@ const ReservationForm = () => {
         setSelectedDateTime(null);
         setNumOfPeople('');
       } else {
-        console.log('Lütfen tarih, saat ve kişi sayısı giriniz.');
+        Alert.alert(
+            'Uyarı',
+            'Tüm alanları doldurun lütfen.',
+            [{ text: 'Tamam' }])
       }
     } catch (error) {
-      console.error('POST error:', error);
+        Alert.alert('Hata', 'Veriler gönderilirken bir sorun oluştu.',[{ text: 'Tamam' }]);
     }
   };
 

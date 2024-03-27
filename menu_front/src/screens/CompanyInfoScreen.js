@@ -13,7 +13,10 @@ export default function CompanyInfoScreen() {
           setCompanyInfo(fetchedCompanyInfo);
           setLoading(false);
         } catch (error) {
-          console.error('Şirket bilgisini çekerken bir hata oluştu:', error);
+          Alert.alert(
+            'Hata',
+            'Şirket bilgisini çekerken bir hata oluştu',
+            [{ text: 'Tamam' }])
           setLoading(false);
         }
       };
