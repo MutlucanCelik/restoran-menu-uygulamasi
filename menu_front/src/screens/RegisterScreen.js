@@ -1,67 +1,46 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, TouchableOpacity, Image, Pressable, SafeAreaView, StyleSheet, ActivityIndicator, Text, TextInput, View } from 'react-native';
 import { BASE_URL } from '../api/api';
 import { getCompanyImage } from '../api/api';
 import axios from 'axios';
-import { UserContext } from '../api/contextApi';
 
 
-
-export default function LoginScreen({ navigation }) {
-    const [loading, setLoading] = useState(true);
-    const [login, setLogin] = useState('');
+export default function RegisterScreen({ navigation }) {
+    const [loading, setLoading] = useState(false);
+    const [name, setName] = useState('');
+    const [user_name, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [logo, setLogo] = useState('');
-    const { updateUser } = useContext(UserContext);
+    
 
-    useEffect(() => {
-        const fetchCompanyImage = async () => {
-            try {
-                const { image } = await getCompanyImage();
-                setLogo(image);
-                setLoading(false);
-            } catch (error) {
-                console.error('Şirketin resmini çekerken bir hata oluştu:', error);
-                setLoading(false);
-            }
-        };
-        fetchCompanyImage();
-    }, []);
-
-    const handleLogin = async () => {
+    const handleRegister = async () => {
       setLoading(true);
       try {
-          const response = await axios.post(`${BASE_URL}api/auth/login`, {
-              login,
+          const response = await axios.post(`${BASE_URL}api/auth/register`, {
+              name,
+              user_name,
+              email,
               password,
           });
-          setLogin('');
+          setName('');
+          setUserName('');
+          setEmail('');
           setPassword('');
           setLoading(false);
           if (response.data.token) {
-            
-              const userInfo ={
-                id:response.data.user.id,
-                user_name:response.data.user.user_name,
-                name:response.data.user.name,
-                email:response.data.user.email
-              }
-              updateUser(userInfo);
-              navigation.navigate('Drawer');
+              Alert.alert('Başarılı', 'Başarıyla kayıt olundu.');
+              navigation.navigate('Login');
           } else {
               // Hatalı giriş
               Alert.alert('Hata', 'Kullanıcı adı veya şifre hatalı.');
           }
       } catch (error) {
-          Alert.alert('Uyarı','Şifreler uyuşmuyor');
+          Alert.alert('Uyarı','Bir sorun oluştu');
           setLoading(false);
 
       }
   };
 
-    function register() {
-        navigation.navigate('Register');
-    }
 
     if (loading) {
         return (
@@ -73,14 +52,29 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image source={{ uri: BASE_URL + logo }} style={styles.image} />
-            <Text style={styles.title}>GİRİŞ</Text>
+            <Text style={styles.title}>Kayıt Ol</Text>
             <View style={styles.inputView}>
+            <TextInput
+                    style={styles.input}
+                    placeholder='Ad soyad'
+                    value={name}
+                    onChangeText={setName}
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                />
+                 <TextInput
+                    style={styles.input}
+                    placeholder='Kullanıcı adı'
+                    value={user_name}
+                    onChangeText={setUserName}
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                />
                 <TextInput
                     style={styles.input}
-                    placeholder='Email veya kullanıcı adı'
-                    value={login}
-                    onChangeText={setLogin}
+                    placeholder='Email'
+                    value={email}
+                    onChangeText={setEmail}
                     autoCorrect={false}
                     autoCapitalize='none'
                 />
@@ -94,13 +88,11 @@ export default function LoginScreen({ navigation }) {
                     autoCapitalize='none'
                 />
             </View>
-            <TouchableOpacity onPress={register} style={styles.rememberView}>
-                <Text style={styles.forgetText}>Hala kayıt olmadınız mı ?</Text>
-            </TouchableOpacity>
+
 
             <View style={styles.buttonView}>
-                <TouchableOpacity onPress={handleLogin} style={styles.button}>
-                    <Text style={styles.buttonText}>Giriş</Text>
+                <TouchableOpacity onPress={handleRegister} style={styles.button}>
+                    <Text style={styles.buttonText}>Kayıt Ol</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -111,12 +103,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         paddingTop: 70,
-    },
-    image: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        resizeMode: 'cover'
     },
     title: {
         fontSize: 30,
@@ -166,6 +152,8 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         width: "100%",
-        paddingHorizontal: 40
+        paddingHorizontal: 40,
+        marginTop:20
+        
     },
 })

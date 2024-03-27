@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = 'https://4636-5-47-161-84.ngrok-free.app/';
+export const BASE_URL = 'https://0dcc-88-236-112-126.ngrok-free.app/';
 
 
 export const getCategories = async () => {
@@ -36,7 +36,7 @@ export const getMeal = async (id) => {
 
 export const getCompanyInfo = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/company-info`);
+    const response = await axios.get(`${BASE_URL}api/company-info`);
     return response.data;
   } catch (error) {
     console.error('Şirket bilgilerini getirirken hata oluştu:', error);
@@ -48,7 +48,29 @@ export const getCompanyImage = async () => {
       const response = await axios.get(`${BASE_URL}api/company-image`);
       return response.data;
     } catch (error) {
+      console.error('Giriş yaparken hata oluştu:', error);
+      throw error;
+    }
+  };
+
+  export const login = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}api/auth/login`, { username, password });
+      return response.data;
+    } catch (error) {
       console.error('Şirket bilgilerini getirirken hata oluştu:', error);
       throw error;
     }
   };
+
+  export const register = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}api/auth/register`, { name, user_name,email,password });
+      return response.data;
+    } catch (error) {
+      console.error('Kayıt olurken hata oluştu:', error);
+      throw error;
+    }
+  };
+
+

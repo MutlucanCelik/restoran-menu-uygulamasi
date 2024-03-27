@@ -2,25 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, Image, StyleSheet } from 'react-native';
 import { getCategories } from '../api/api';
 import CategoryGrid from '../components/CategoryGrid';
+import { useFocusEffect } from '@react-navigation/native';
 
 const CategoryScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
+  const fetchCategories = async () => {
+    try {
+      const fetchedCategories = await getCategories();
+      setCategories(fetchedCategories);
+      setLoading(false);
+    } catch (error) {
+      console.error('Kategorileri çekerken bir hata oluştu:', error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const fetchedCategories = await getCategories();
-        setCategories(fetchedCategories);
-        setLoading(false);
-      } catch (error) {
-        console.error('Kategorileri çekerken bir hata oluştu:', error);
-        setLoading(false);
-      }
-    };
-
     fetchCategories();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCategories();
+      return () => {
+      };
+    }, [])
+  );
 
   function rederCategoryItem(category){
     function pressHandler(){

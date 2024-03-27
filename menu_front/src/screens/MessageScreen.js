@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../api/api';
+import { UserContext } from '../api/contextApi';
 
 const MessageScreen = () => {
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [options, setOptions] = useState([]);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     // API'den option verilerini almak için bir istek yap
@@ -27,7 +29,7 @@ const MessageScreen = () => {
   const sendMessage = async () => {
     try {
       const response = await axios.post(`${BASE_URL}api/send-message`, {
-        user_id: '4',
+        user_id: user.id,
         message: message,
         topic_id: selectedOption
       });
@@ -35,8 +37,11 @@ const MessageScreen = () => {
       if (response.data.message == 'success') {
         setMessage('');
         setSelectedOption('')
-        Alert.alert('Tebrikler', 'Mesajını Başarıyla gönderildi.');
-      } else {
+        Alert.alert(
+          'Başarılı',
+          'Mesajınız başarıyla gönderildi.',
+          [{ text: 'Tamam' }]
+        );      } else {
         Alert.alert('Hata', 'Beklenmedik bir sorun oluştu');
       }
     } catch (error) {

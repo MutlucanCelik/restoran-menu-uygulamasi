@@ -46,7 +46,10 @@ export default function MealDetailScreen({route,navigation}) {
             />
             <Text style={styles.mealName}>{meal.name}</Text>
             <Text style={styles.mealDescription}>{meal.description}</Text>
-            <Text style={styles.mealPrice}>Fiyat: ₺{meal.price}</Text>
+            <View style={{flexDirection:'row',alignItems:'center',gap:4,marginTop:15}}>
+              <Text style={styles.mealPrice}>Fiyat :</Text>
+              <Text style={{fontSize:17}}>₺{meal.price}</Text>
+            </View>
     </View>
   )
 }
@@ -80,9 +83,10 @@ const styles = StyleSheet.create({
     letterSpacing:1,
   },
   mealPrice:{
-    marginTop:10,
+   
     fontSize: 17,
-    letterSpacing:1
+    letterSpacing:1,
+    fontWeight:'bold'
   }
   
 
